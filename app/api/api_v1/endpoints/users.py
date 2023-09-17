@@ -6,16 +6,18 @@ from app import schemas, models
 
 router = APIRouter()
 
+
 @router.get("/{user_id}", response_model=schemas.users.User)
 async def get_users(user_id, db: Session = Depends(get_db)):
-    user = models.auth.User.get_user(db,user_id)
+    user = models.auth.User.get_user(db, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
+
 @router.get("/", response_model=list[schemas.users.User])
 async def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return models.auth.User.get_users(db,skip,limit)
+    return models.auth.User.get_users(db, skip, limit)
 
 
 @router.post("/", response_model=schemas.users.User)

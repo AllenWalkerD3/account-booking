@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship, Session
 from ..database import Base
 from app import schemas
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -19,15 +20,15 @@ class User(Base):
     @classmethod
     def get_user(cls, db: Session, user_id: int):
         return db.query(cls).filter(cls.id == user_id).first()
-    
+
     @classmethod
     def get_users(cls, db: Session, skip: int = 0, limit: int = 100):
         return db.query(cls).offset(skip).limit(limit).all()
-    
+
     @classmethod
     def get_user_by_email(cls, db: Session, email: str):
         return db.query(cls).filter(cls.email == email).first()
-    
+
     @classmethod
     def create_user(cls, db: Session, user: schemas.users.UserCreate):
         fake_hashed_password = user.password + "notreallyhashed"

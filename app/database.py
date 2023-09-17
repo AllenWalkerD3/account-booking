@@ -11,13 +11,12 @@ url = URL.create(
     password="",
     host="localhost",
     database="account_booking",
-    port=5433
+    port=5433,
 )
 
 
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_account_booking.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
-
 
 
 # engine = create_engine(

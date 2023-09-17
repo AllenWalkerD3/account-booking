@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 from app.schemas.account_book import AccountBook
 
+
 class UserBase(BaseModel):
     username: str
     email: str
