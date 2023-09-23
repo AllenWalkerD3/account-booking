@@ -69,7 +69,7 @@ class Transaction(Base):
     __tablename__ = "transaction"
 
     id = Column(Integer, primary_key=True, index=True)
-    decription = Column(String, nullable=False)
+    description = Column(String, nullable=False)
     amount = Column(Float)
     transaction_type = Column(String, nullable=False, default="debit")
     datetime = Column(DateTime, default=datetime.datetime.utcnow)
@@ -95,9 +95,9 @@ class Transaction(Base):
 
     @classmethod
     def create_transaction(
-        cls, db: Session, transaction: schemas.account_book.TransactionCreate, account_type_id: int, transaction_category_id: int, book_id: int
+        cls, db: Session, transaction: schemas.account_book.TransactionCreate
     ):
-        db_transaction = cls(**transaction.__dict__, account_type_id=account_type_id, transaction_category_id=transaction_category_id, book_id=book_id)
+        db_transaction = cls(**transaction.__dict__)
         db.add(db_transaction)
         db.commit()
         db.refresh(db_transaction)

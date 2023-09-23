@@ -2,27 +2,6 @@ from pydantic import BaseModel
 import datetime
 
 
-# region Account Book
-class AccountBookBase(BaseModel):
-    book_name: str
-    user_id: int
-
-
-class AccountBookCreate(AccountBookBase):
-    pass
-
-
-class AccountBook(AccountBookBase):
-    id: int
-    transactions: list = []
-
-    class Config:
-        from_attributes = True
-
-
-# endregion
-
-
 # region Account Type
 class AccountTypeBase(BaseModel):
     name: str
@@ -44,7 +23,7 @@ class AccountType(AccountTypeBase):
 
 # region Account Category
 class TransactionCategoryBase(BaseModel):
-    book_name: str
+    name: str
     color: str
 
 
@@ -64,12 +43,9 @@ class TransactionCategory(TransactionCategoryBase):
 
 # region Transaction
 class TransactionBase(BaseModel):
-    decription: str
-    amount: str
+    description: str
+    amount: float
     transaction_type: str
-    account_type: AccountType
-    transaction_category: TransactionCategory
-    book: AccountBook
     account_type_id: int
     transaction_category_id: int
     book_id: int
@@ -82,6 +58,29 @@ class TransactionCreate(TransactionBase):
 class Transaction(TransactionBase):
     id: int
     datetime: datetime.datetime
+    account_type: AccountType
+    transaction_category: TransactionCategory
+
+    class Config:
+        from_attributes = True
+
+
+# endregion
+
+
+# region Account Book
+class AccountBookBase(BaseModel):
+    book_name: str
+    user_id: int
+
+
+class AccountBookCreate(AccountBookBase):
+    pass
+
+
+class AccountBook(AccountBookBase):
+    id: int
+    transactions: list[Transaction] = []
 
     class Config:
         from_attributes = True

@@ -79,9 +79,6 @@ def create_transaction(
     return models.booking.Transaction.create_transaction(
         db=db,
         transaction=transaction,
-        account_type_id=transaction.account_type_id,
-        transaction_category_id=transaction.transaction_category_id,
-        book_id=transaction.book_id,
     )
 
 
