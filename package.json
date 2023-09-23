@@ -1,0 +1,10 @@
+{
+    "name": "account-booking-v1",
+    "version": "1.0.0",
+    "author": "Aren Woka D3",
+    "dependencies": {},
+    "devDependencies": {
+        "serverless-offline": "^13.0.0",
+        "serverless-python-requirements": "^6.0.0"
+    }
+}

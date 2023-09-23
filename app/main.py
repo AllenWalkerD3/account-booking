@@ -1,18 +1,18 @@
+import os
 from typing import Union
 
 from fastapi import FastAPI, Request, Response
-
-from .api.api_v1.api import router as api_router
-
-from .models import Base
-
-from .database import SessionLocal, engine
-
-Base.metadata.create_all(bind=engine)
-
 from mangum import Mangum
 
-app = FastAPI()
+from .api.api_v1.api import router as api_router
+from .database import SessionLocal, engine
+from .models import Base
+
+Base.metadata.create_all(bind=engine)
+stage = os.environ.get('STAGE', None)
+openapi_prefix = f"/{stage}" if stage else "/"
+
+app = FastAPI(title="AccountBooking", openapi_prefix=openapi_prefix)
 
 
 @app.middleware("http")

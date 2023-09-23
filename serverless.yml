@@ -1,0 +1,40 @@
+service: account-booking-v1
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: eu-west-1
+  stage: ${opt:stage, "dev"}
+
+plugins:
+  - serverless-python-requirements
+  - serverless-offline
+
+package:
+  patterns:
+    - "!requirements.txt"
+    - "!package.json"
+    - "!package-lock.json"
+    - "!.venv/**"
+    - "!node_modules/**"
+
+custom:
+  pythonRequirements:
+    layer:
+      name: account-booking-v1-layer
+      description: Account Booking V1 Layer
+      compatibleRuntimes:
+        - python3.9
+
+functions:
+  app:
+    handler: handler.handler
+    environment:
+      STAGE: ${self:provider.stage}
+    layers:
+      - { Ref: PythonRequirementsLambdaLayer }
+    events:
+      - http:
+          method: any
+          path: /{proxy+}
+          cors: true
