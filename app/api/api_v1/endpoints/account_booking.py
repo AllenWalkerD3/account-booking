@@ -82,29 +82,40 @@ def create_transaction(
     )
 
 
-
 @router.get(
-    "/transactions/categories/{category_id}", response_model=schemas.account_book.TransactionCategory
+    "/transactions/categories/{category_id}",
+    response_model=schemas.account_book.TransactionCategory,
 )
-async def get_transaction_category(transaction_category_id, db: Session = Depends(get_db)):
-    transaction = models.booking.TransactionCategory.get_transaction(db, transaction_category_id)
+async def get_transaction_category(
+    transaction_category_id, db: Session = Depends(get_db)
+):
+    transaction = models.booking.TransactionCategory.get_transaction(
+        db, transaction_category_id
+    )
     if not transaction:
         raise HTTPException(status_code=404, detail="Transaction Category not found")
     return transaction
 
 
-@router.get("/transactions/categories", response_model=list[schemas.account_book.TransactionCategory])
+@router.get(
+    "/transactions/categories",
+    response_model=list[schemas.account_book.TransactionCategory],
+)
 async def get_transaction_categories(
     skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
 ):
-    return models.booking.TransactionCategory.get_transaction_categories(db, skip, limit)
+    return models.booking.TransactionCategory.get_transaction_categories(
+        db, skip, limit
+    )
 
 
-@router.post("/transactions/categories", response_model=schemas.account_book.TransactionCategory)
+@router.post(
+    "/transactions/categories", response_model=schemas.account_book.TransactionCategory
+)
 def create_transaction_category(
-    transaction_category: schemas.account_book.TransactionCategoryCreate, db: Session = Depends(get_db)
+    transaction_category: schemas.account_book.TransactionCategoryCreate,
+    db: Session = Depends(get_db),
 ):
     return models.booking.TransactionCategory.create_transaction_category(
-        db=db,
-        transaction_category=transaction_category
+        db=db, transaction_category=transaction_category
     )
