@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import URL
 
 
-url = URL.create(
+POSTGRESSQL_URL = URL.create(
     drivername="postgresql",
     username="postgres",
     password="",
@@ -13,16 +13,16 @@ url = URL.create(
     database="account_booking",
     port=5433,
 )
+engine = create_engine(POSTGRESSQL_URL)
 
 
+# SQLALCHEMY_DATABASE_URL = "s3://account-booking-v1-stagi-serverlessdeploymentbuck-6os1hrq3fy1b/sql_account_booking.db"
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_account_booking.db"
-# SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 
 # engine = create_engine(
 #     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 # )
-engine = create_engine(url)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

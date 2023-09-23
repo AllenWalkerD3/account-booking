@@ -12,7 +12,7 @@ Base.metadata.create_all(bind=engine)
 stage = os.environ.get('STAGE', None)
 openapi_prefix = f"/{stage}" if stage else "/"
 
-app = FastAPI(title="AccountBooking", openapi_prefix=openapi_prefix)
+app = FastAPI(title="AccountBooking")
 
 
 @app.middleware("http")
